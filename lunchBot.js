@@ -147,6 +147,7 @@ function setTallyTimer(){
     var tallyTime = new Date();
     tallyTime.setHours(CONFIG.tallyTime.hour, CONFIG.tallyTime.minute);
     var rightNow = new Date();
+    //if we want to take the 
     if(tallyTime > rightNow){
      setTimeout(function(){
             var winner = false,
