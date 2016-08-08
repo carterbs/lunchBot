@@ -1,0 +1,209 @@
+{
+	"pollChannel":"D1TL63YSE",
+	"tallyTime":{
+		"hour":18,
+		"minute":17  
+	},
+	"defaultRestaurants":[
+    {
+        "name": "Jack Brown's",
+        "category": "Bar food"
+    },
+    {
+        "name": "Benny Deluca's",
+        "category": "Pizza"
+    },
+    {
+        "name": "Crozet Pizza",
+        "category": "Pizza"
+    },
+    {
+        "name": "Wild Wing Cafe",
+        "category": "Chicken"
+    },
+    {
+        "name": "Brown's Fried Chicken",
+        "category": "Chicken"
+    },
+    {
+        "name": "Nude Food",
+        "category": "Healthy"
+    },
+    {
+        "name": "Wayside",
+        "category": "Chicken"
+    },
+    {
+        "name": "Chick-Fil-A",
+        "category": "Chicken"
+    },
+    {
+        "name": "Moe's BBQ",
+        "category": "BBQ"
+    },
+    {
+        "name": "RedHub Food Co (BBQ)",
+        "category": "BBQ"
+    },
+    {
+        "name": "Ginko Chinese",
+        "category": "Chinese"
+    },
+    {
+        "name": "Miso Sweet",
+        "category": "Chinese"
+    },
+    {
+        "name": "Taste of China",
+        "category": "Chinese"
+    },
+    {
+        "name": "Thai Cuisine and Noodle House",
+        "category": "Thai"
+    },
+    {
+        "name": "Kuma Sushi Noodles & Bar",
+        "category": "Sushi"
+    },
+    {
+        "name": "Taiwan Garden",
+        "category": "Thai"
+    },
+    {
+        "name": "Thai 99",
+        "category": "Thai"
+    },
+    {
+        "name": "Szechuan Restaurant",
+        "category": "Chinese"
+    },
+    {
+        "name": "Red Lantern",
+        "category": "Chinese"
+    },
+    {
+        "name": "Asian Express",
+        "category": "Chinese"
+    },
+    {
+        "name": "Downtown Thai",
+        "category": "Thai"
+    },
+    {
+        "name": "Monsoon Siam",
+        "category": "Thai"
+    },
+    {
+        "name": "Ivy Provisions",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Gudalajara",
+        "category": "Mexican"
+    },
+    {
+        "name": "The Local Smokehouse",
+        "category": "BBQ"
+    },
+    {
+        "name": "Cvillian & Big B's BBQ",
+        "category": "BBQ"
+    },
+    {
+        "name": "Miller's",
+        "category": "Bar food"
+    },
+    {
+        "name": "Christian's",
+        "category": "Pizza"
+    },
+    {
+        "name": "Rev Soup",
+        "category": "Healthy"
+    },
+    {
+        "name": "Jason's Deli",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Panera",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Feast",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Timbercreek Market",
+        "category": "Healthy"
+    },
+    {
+        "name": "Milan",
+        "category": "Indian"
+    },
+    {
+        "name": "Taste of India",
+        "category": "Indian"
+    },
+    {
+        "name": "Fabio's",
+        "category": "Pizza"
+    },
+    {
+        "name": "College Inn",
+        "category": "Pizza"
+    },
+    {
+        "name": "Afghan Kabob Palace",
+        "category": "Afghan"
+    },
+    {
+        "name": "Baja Bean",
+        "category": "Mexican"
+    },
+    {
+        "name": "Yearbook Taco",
+        "category": "Mexican"
+    },
+    {
+        "name": "Chipotle",
+        "category": "Mexican"
+    },
+    {
+        "name": "Plaza Azteca",
+        "category": "Mexican"
+    },
+    {
+        "name": "The Shebeen",
+        "category": "Healthy"
+    },
+    {
+        "name": "Belmont Pizza",
+        "category": "Pizza"
+    },
+    {
+        "name": "Holly's",
+        "category": "Bar food"
+    },
+    {
+        "name": "Little John's",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Firehouse Subs",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Basil",
+        "category": "Healthy"
+    },
+    {
+        "name": "Got Dumplings",
+        "category": "Healthy"
+    },
+    {
+        "name": "Vuuuuu Noodles",
+        "category": "Healthy"
+    }
+]
+}
