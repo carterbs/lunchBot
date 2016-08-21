@@ -53,6 +53,7 @@ var today = new Date();
 //initialization function
 function startBot(){
     controller.storage.users.get(bot.identity.id, function(err, data){
+	//This function gets saved data (e.g., this week's winners) from storage.
         if(!data){
             data = {data:{}};
             var defaultData = {lunchOptions: CONFIG.defaultRestaurants, thisWeeksWinners:[]};
@@ -86,9 +87,9 @@ function createPoll(){
         bot.botData.dayOfLastPoll=today.getDay();        
         controller.storage.users.save({id:bot.identity.id, data:bot.botData});
     } else if(bot.botData.dayOfLastPoll == today.getDay()){
-        //return;
+        //don't want lunchBot running twice.
+	return;
     }
-
 
     function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
@@ -112,11 +113,13 @@ function createPoll(){
         var categories=[];
 
         for(var i=0;i<restaurants.length; i++){
+		//ignores any restaurant that's been chosen this week.
             if(bot.botData.thisWeeksWinners.join(',').indexOf(restaurants[i].name) > -1) continue; 
             if(i==0){
                 names.push(restaurants[i].name);
                 categories.push(restaurants[i].category);
             } else {
+		//Makes sure two of the same category aren't added to the options list.
                 if(categories.indexOf(restaurants[i].category) < 0 ){
                     names.push(restaurants[i].name);
                     categories.push(restaurants[i].category);
@@ -142,23 +145,26 @@ function createPoll(){
     setTallyTimer();            
 };
 
+//Sets a timer to announce the winner at whatever time is in the config file.
 function setTallyTimer(){
     var tallyTime = new Date();
     tallyTime.setHours(CONFIG.tallyTime.hour, CONFIG.tallyTime.minute);
     var rightNow = new Date();
-    //if we want to take the 
     if(tallyTime > rightNow){
      setTimeout(function(){
             var winner = false,
                 numVotes = 0,
                 tie = false;
+		//Goes through each of the options and counts the number of votes.
             for(var i=0;i< Object.keys(bot.lunchTally).length;i++){
                 var key = Object.keys(bot.lunchTally)[i];
+		//first option becomes the winner.
                 if(!winner){
                     winner = bot.todaysOptions[i];
                     numVotes = bot.lunchTally[key];                    
                     continue;                     
                 }
+		//if this option has more votes than current winner, it becomes the winner.
                 if (bot.lunchTally[key] > numVotes) {
                     winner = bot.todaysOptions[i];
                     numVotes = bot.lunchTally[key];                    
