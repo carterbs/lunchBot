@@ -83,7 +83,9 @@ controller.hears(['lunchbot, list all restaurants'], 'direct_message, mention', 
 });
 
 function createPoll(){
-    if(typeof(bot.botData.dayOfLastPoll) == "undefined" || bot.botData.dayOfLastPoll != today.getDay()){
+    var storageUndefined = typeof(bot.botData.dayOfLastPoll) == "undefined";
+    //if we've never run a poll, or we have, and it wasn't today, get crackin.
+    if( storageUndefined || (!storageUndefined && bot.botData.dayOfLastPoll != today.getDay())){
         bot.botData.dayOfLastPoll=today.getDay();        
         controller.storage.users.save({id:bot.identity.id, data:bot.botData});
     } else if(bot.botData.dayOfLastPoll == today.getDay()){
