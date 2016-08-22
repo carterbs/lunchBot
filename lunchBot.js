@@ -83,12 +83,12 @@ controller.hears(['lunchbot, list all restaurants'], 'direct_message, mention', 
 });
 
 function createPoll(){
-    if(typeof(bot.botData.dayOfLastPoll) == "undefined"){
+    if(typeof(bot.botData.dayOfLastPoll) == "undefined" || bot.botData.dayOfLastPoll != today.getDay()){
         bot.botData.dayOfLastPoll=today.getDay();        
         controller.storage.users.save({id:bot.identity.id, data:bot.botData});
     } else if(bot.botData.dayOfLastPoll == today.getDay()){
         //don't want lunchBot running twice.
-	return;
+	   return;
     }
 
     function shuffle(array) {
@@ -119,7 +119,7 @@ function createPoll(){
                 names.push(restaurants[i].name);
                 categories.push(restaurants[i].category);
             } else {
-		//Makes sure two of the same category aren't added to the options list.
+		    //Makes sure two of the same category aren't added to the options list.
                 if(categories.indexOf(restaurants[i].category) < 0 ){
                     names.push(restaurants[i].name);
                     categories.push(restaurants[i].category);
