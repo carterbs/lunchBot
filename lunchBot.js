@@ -161,8 +161,7 @@ function setTallyTimer(){
                     winner = bot.todaysOptions[i];
                     numVotes = bot.lunchTally[key];                    
                 } else if (numVotes && bot.lunchTally[key] == numVotes) {
-                    winner = [winner, bot.todaysOptions[i]];
-                    winner = winner.join(',');
+                    winner += ', ' + bot.todaysOptions[i];
                     tie=true;
                 }
             }
