@@ -184,30 +184,11 @@ controller.on('reaction_added', function(bot, message){
         //if i need to reprimand people for voting multiple times...code below will return user object.
         //bot.api.users.info({user:message.user})
         if(bot.lunchVoters.indexOf(message.user) == -1 ) {
-            switch(message.reaction){
-                case "one":
-                    bot.lunchTally['one']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "two":
-                    bot.lunchTally['two']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "three":
-                    bot.lunchTally['three']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "four":
-                    bot.lunchTally['four']++;
-                    bot.lunchVoters.push(message.user);
-                    break;
-                case "five":
-                    bot.lunchTally['five']++;
-                    bot.lunchVoters.push(message.user);
-                    break;
-                default:
-                    bot.say({channel:CONFIG.pollChannel, text:"I can't count that kind of reaction."});
-                    break;    
+            if (message.reaction in bot.lunchTally) {
+                bot.lunchTally[message.reaction]++;
+                bot.lunchVoters.push(message.user);
+            } else {
+                bot.say({channel:CONFIG.pollChannel, text:"I can't count that kind of reaction."});
             }
         }
     }
