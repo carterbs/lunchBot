@@ -131,7 +131,7 @@ function createPoll(){
     restaurants.forEach(function (restaurant) {
         bot.say({
             channel: CONFIG.pollChannel,
-            text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.category + ')';
+            text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.category + ')'
         })
     });
     setTallyTimer();
