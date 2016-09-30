@@ -109,42 +109,32 @@ function createPoll(){
 
       return array;
     }
-    function chooseRandom(array){
-        var restaurants = shuffle(array);  
-        var names=[];
-        var categories=[];
+    var chooseRandom = function (array) {
+        var categories = [];
+        var reactions = ['one', 'two', 'three', 'four', 'five'];
 
-        for(var i=0;i<restaurants.length; i++){
-		//ignores any restaurant that's been chosen this week.
-            if(bot.botData.thisWeeksWinners.join(',').indexOf(restaurants[i].name) > -1) continue; 
-            if(i==0){
-                names.push(restaurants[i].name);
-                categories.push(restaurants[i].category);
-            } else {
-		    //Makes sure two of the same category aren't added to the options list.
-                if(categories.indexOf(restaurants[i].category) < 0 ){
-                    names.push(restaurants[i].name);
-                    categories.push(restaurants[i].category);
-                }
+        return shuffle(array).filter(function (restaurant) {
+            if (categories.length == 5) return false;
+            if (bot.botData.thisWeeksWinners.join(',').indexOf(restaurant.name) > -1) return false;
+            if (categories.indexOf(restaurant.category) < 0) {
+                categories.push(restaurant.category);
+                restaurant.reaction = reactions.shift();
+                return true;
             }
-            if(names.length==5){
-                break;
-            }
-        }
-        return names;
+            return false;
+        });
+    };
 
-    }
-    var restaurants = [];
-    restaurants = bot.botData.lunchOptions;
-    restaurants = chooseRandom(restaurants);
-    bot.todaysOptions=restaurants;
-    bot.say({channel:CONFIG.pollChannel, text: "Here are a couple of options for lunch. React using the number of your favorite option."});  
-    bot.say({channel:CONFIG.pollChannel, text: ":one: " + restaurants[0]});
-    bot.say({channel:CONFIG.pollChannel, text: ":two: " + restaurants[1]});
-    bot.say({channel:CONFIG.pollChannel, text: ":three: " + restaurants[2]});
-    bot.say({channel:CONFIG.pollChannel, text: ":four: " + restaurants[3]});
-    bot.say({channel:CONFIG.pollChannel, text: ":five: " + restaurants[4]}); 
-    setTallyTimer();            
+    var restaurants = chooseRandom(bot.botData.lunchOptions);
+    bot.todaysOptions = restaurants.map(function (r) { return r.name; });
+    bot.say({channel: CONFIG.pollChannel, text: "Here are a couple of options for lunch. React using the number of your favorite option."});
+    restaurants.forEach(function (restaurant) {
+        bot.say({
+            channel: CONFIG.pollChannel,
+            text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.category + ')'
+        })
+    });
+    setTallyTimer();
 };
 
 //Sets a timer to announce the winner at whatever time is in the config file.
@@ -171,8 +161,7 @@ function setTallyTimer(){
                     winner = bot.todaysOptions[i];
                     numVotes = bot.lunchTally[key];                    
                 } else if (numVotes && bot.lunchTally[key] == numVotes) {
-                    winner = [winner, bot.todaysOptions[i]];
-                    winner = winner.join(',');
+                    winner += ', ' + bot.todaysOptions[i];
                     tie=true;
                 }
             }
@@ -194,30 +183,11 @@ controller.on('reaction_added', function(bot, message){
         //if i need to reprimand people for voting multiple times...code below will return user object.
         //bot.api.users.info({user:message.user})
         if(bot.lunchVoters.indexOf(message.user) == -1 ) {
-            switch(message.reaction){
-                case "one":
-                    bot.lunchTally['one']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "two":
-                    bot.lunchTally['two']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "three":
-                    bot.lunchTally['three']++;
-                    bot.lunchVoters.push(message.user);                    
-                    break;
-                case "four":
-                    bot.lunchTally['four']++;
-                    bot.lunchVoters.push(message.user);
-                    break;
-                case "five":
-                    bot.lunchTally['five']++;
-                    bot.lunchVoters.push(message.user);
-                    break;
-                default:
-                    bot.say({channel:CONFIG.pollChannel, text:"I can't count that kind of reaction."});
-                    break;    
+            if (message.reaction in bot.lunchTally) {
+                bot.lunchTally[message.reaction]++;
+                bot.lunchVoters.push(message.user);
+            } else {
+                bot.say({channel:CONFIG.pollChannel, text:"I can't count that kind of reaction."});
             }
         }
     }
