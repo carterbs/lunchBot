@@ -67,8 +67,12 @@
     },
     {
         "name": "Taiwan Garden",
-        "category": "Thai"
+        "category": "Chinese"
     },
+	{
+		"name":"Doma",
+		"category": "Chicken"
+	},
     {
         "name": "Thai 99",
         "category": "Thai"
@@ -103,10 +107,6 @@
     },
     {
         "name": "The Local Smokehouse",
-        "category": "BBQ"
-    },
-    {
-        "name": "Cvillian & Big B's BBQ",
         "category": "BBQ"
     },
     {
@@ -180,10 +180,6 @@
     {
         "name": "Belmont Pizza",
         "category": "Pizza"
-    },
-    {
-        "name": "Holly's",
-        "category": "Bar food"
     },
     {
         "name": "Little John's",
