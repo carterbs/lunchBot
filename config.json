@@ -7,71 +7,27 @@
 	"defaultRestaurants":[
     {
         "name": "Jack Brown's",
-        "category": "Bar food"
-    },
-    {
-        "name": "Zip Korean Chicken",
-        "category": "Chicken"
-    },
-    {
-        "name": "Black Jack's Mobile Soul Food Kitchen",
-        "category": "Chicken"
-    },
-    {
-        "name": "The Ante Room",
-        "category": "Chicken"
+        "category": "American"
     },
     {
         "name": "The Biltmore",
-        "category": "Bar Food"
+        "category": "American"
+    },
+    {
+        "name": "Miller's",
+        "category": "American"
+    },
+    {
+        "name": "Moe's BBQ",
+        "category": "American"
+    },
+    {
+        "name": "The Local Smokehouse",
+        "category": "American"
     },
     {
         "name": "Marco & Luca",
         "category": "Asian"
-    },
-    {
-        "name": "Fig Bistro - Cajun",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "The Market at Mill Creek",
-        "category": "Sandwiches"   
-    },
-    {
-        "name": "Fry's Spring",
-        "category": "Pizza"
-    },
-    {
-        "name": "Benny Deluca's",
-        "category": "Pizza"
-    },
-    {
-        "name": "Crozet Pizza",
-        "category": "Pizza"
-    },
-    {
-        "name": "Wild Wing Cafe",
-        "category": "Chicken"
-    },
-    {
-        "name": "Brown's Fried Chicken",
-        "category": "Chicken"
-    },
-    {
-        "name": "Nude Food",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Wayside",
-        "category": "Chicken"
-    },
-    {
-        "name": "Chick-Fil-A",
-        "category": "Chicken"
-    },
-    {
-        "name": "Moe's BBQ",
-        "category": "BBQ"
     },
     {
         "name": "Ginko Chinese",
@@ -86,24 +42,12 @@
         "category": "Asian"
     },
     {
-        "name": "Thai Cuisine and Noodle House",
-        "category": "Thai"
-    },
-    {
         "name": "Kuma Sushi Noodles & Bar",
         "category": "Asian"
     },
     {
         "name": "Taiwan Garden",
         "category": "Asian"
-    },
-	{
-		"name":"Doma",
-		"category": "Chicken"
-	},
-    {
-        "name": "Thai 99",
-        "category": "Thai"
     },
     {
         "name": "Szechuan Restaurant",
@@ -118,32 +62,104 @@
         "category": "Asian"
     },
     {
-        "name": "Downtown Thai",
-        "category": "Thai"
+        "name": "Got Dumplings",
+        "category": "Asian"
     },
     {
-        "name": "Monsoon Siam",
-        "category": "Thai"
+        "name": "Vuuuuu Noodles",
+        "category": "Asian"
     },
     {
-        "name": "Ivy Provisions",
-        "category": "Sandwiches"
+        "name": "Zip Korean Chicken",
+        "category": "Chicken"
+    },
+    {
+        "name": "Black Jack's Mobile Soul Food Kitchen",
+        "category": "Chicken"
+    },
+    {
+        "name": "The Ante Room",
+        "category": "Chicken"
+    },
+    {
+        "name": "Wild Wing Cafe",
+        "category": "Chicken"
+    },
+    {
+        "name": "Brown's Fried Chicken",
+        "category": "Chicken"
+    },
+    {
+        "name": "Wayside",
+        "category": "Chicken"
+    },
+    {
+        "name": "Chick-Fil-A",
+        "category": "Chicken"
+    },
+    {
+        "name": "Doma",
+        "category": "Chicken"
     },
     {
         "name": "Gudalajara",
         "category": "Mexican"
     },
     {
-        "name": "The Local Smokehouse",
-        "category": "BBQ"
+        "name": "Baja Bean",
+        "category": "Mexican"
     },
     {
-        "name": "Miller's",
-        "category": "Bar food"
+        "name": "Yearbook Taco",
+        "category": "Mexican"
+    },
+    {
+        "name": "Plaza Azteca",
+        "category": "Mexican"
+    },
+    {
+        "name": "Fry's Spring",
+        "category": "Pizza"
+    },
+    {
+        "name": "Benny Deluca's",
+        "category": "Pizza"
+    },
+    {
+        "name": "Crozet Pizza",
+        "category": "Pizza"
     },
     {
         "name": "Christian's",
         "category": "Pizza"
+    },
+    {
+        "name": "Fabio's",
+        "category": "Pizza"
+    },
+    {
+        "name": "College Inn",
+        "category": "Pizza"
+    },
+    {
+        "name": "Belmont Pizza",
+        "category": "Pizza"
+    },
+    {
+        "name": "Fig Bistro - Cajun",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "The Market at Mill Creek",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Nude Food",
+        "category": "Sandwiches"
+    },
+    {
+        "name": "Ivy Provisions",
+        "category": "Sandwiches"
     },
     {
         "name": "Jason's Deli",
@@ -162,44 +178,8 @@
         "category": "Sandwiches"
     },
     {
-        "name": "Milan",
-        "category": "Indian"
-    },
-    {
-        "name": "Taste of India",
-        "category": "Indian"
-    },
-    {
-        "name": "Fabio's",
-        "category": "Pizza"
-    },
-    {
-        "name": "College Inn",
-        "category": "Pizza"
-    },
-    {
-        "name": "Afghan Kabob Palace",
-        "category": "Afghan"
-    },
-    {
-        "name": "Baja Bean",
-        "category": "Mexican"
-    },
-    {
-        "name": "Yearbook Taco",
-        "category": "Mexican"
-    },
-    {
-        "name": "Plaza Azteca",
-        "category": "Mexican"
-    },
-    {
         "name": "The Shebeen",
         "category": "Sandwiches"
-    },
-    {
-        "name": "Belmont Pizza",
-        "category": "Pizza"
     },
     {
         "name": "Little John's",
@@ -214,12 +194,32 @@
         "category": "Sandwiches"
     },
     {
-        "name": "Got Dumplings",
-        "category": "Asian"
+        "name": "Afghan Kabob Palace",
+        "category": "Thai/Indian"
     },
     {
-        "name": "Vuuuuu Noodles",
-        "category": "Asian"
+        "name": "Milan",
+        "category": "Thai/Indian"
+    },
+    {
+        "name": "Taste of India",
+        "category": "Thai/Indian"
+    },
+    {
+        "name": "Thai Cuisine and Noodle House",
+        "category": "Thai/Indian"
+    },
+    {
+        "name": "Thai 99",
+        "category": "Thai/Indian"
+    },
+    {
+        "name": "Downtown Thai",
+        "category": "Thai/Indian"
+    },
+    {
+        "name": "Monsoon Siam",
+        "category": "Thai/Indian"
     }
 ]
 }
