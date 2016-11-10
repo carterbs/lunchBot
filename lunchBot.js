@@ -56,12 +56,15 @@ function startBot(){
 	//This function gets saved data (e.g., this week's winners) from storage.
         if(!data){
             data = {data:{}};
-            var defaultData = {lunchOptions: CONFIG.defaultRestaurants, thisWeeksWinners:[]};
+            var defaultData = {thisWeeksWinners:[]};
             controller.storage.users.save({id:bot.identity.id, data:defaultData});
             bot.botData = defaultData;
         } else {
-            bot.botData = data.data;
+            bot.botData = data.data;            
         }
+        //lunchbot will get fresh restaurants every time, so you can update the list in the middle
+        //of the week.            
+        bot.botData.lunchOptions=CONFIG.defaultRestaurants;
         //If it's monday, wipe the winners.
         if(today.getDay() == 1 || typeof(data.data.thisWeeksWinners) == "undefined"){
             bot.botData.thisWeeksWinners = [];
