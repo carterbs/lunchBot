@@ -96,6 +96,7 @@ function updateRestaurants() {
         if (!error && response.statusCode === 200) {
             // parse data into defaultRestaurants format
             var newRestaurants = [];
+
             body.restaurants.forEach(function (restaurant) {
                 if ((restaurant.yelpReviewCount < CONFIG.yelpReviewCount) ||
                     (restaurant.yelpRating < CONFIG.minYelpRating)) {
@@ -136,7 +137,7 @@ controller.hears(['lunchbot, list all restaurants'], 'direct_message, mention', 
 function createPoll(){
     var storageUndefined = typeof(bot.botData.dayOfLastPoll) == "undefined";
     //if we've never run a poll, or we have, and it wasn't today, get crackin.
-    if( storageUndefined || (!storageUndefined && bot.botData.dayOfLastPoll != today.getDay())){
+    if (storageUndefined || (bot.botData.dayOfLastPoll != today.getDay())) {
         bot.botData.dayOfLastPoll=today.getDay();
         controller.storage.users.save({id:bot.identity.id, data:bot.botData});
     } else if(bot.botData.dayOfLastPoll == today.getDay()){
