@@ -81,8 +81,10 @@ function startBot(){
  */
 function updateRestaurants() {
     // Get restaurant data from OrderUp
-    // TODO: Make this URL configurable.
-    var url = 'https://orderup.com/api/v2/restaurants?order_type=delivery&lon=-78.47682150000003&lat=38.0304323&market_id=35';
+    var url = 'https://orderup.com/api/v2/restaurants?order_type=delivery' + 
+        '&lon=' + CONFIG.location.longitude + 
+        '&lat=' + CONFIG.location.latitude + 
+        '&market_id=' + CONFIG.location.marketID;
 
     // This is the root of the OrderUp URL. Add add the restaurant slug plus '/delivery' to build the full URL.
     var orderUpRootURL = 'https://orderup.com/restaurants/';
@@ -104,7 +106,7 @@ function updateRestaurants() {
                 var newRestaurant = {
                     "name": restaurant.name,
                     "categories": restaurant.restaurantCategories,
-                    "orderUpURL": url + restaurant.slug + '/delivery',
+                    "slug": restaurant.slug,
                     "restaurantURL": restaurant.yelpURL,
                     "image": restaurant.yelpRatingImageUrlSmall
                 };

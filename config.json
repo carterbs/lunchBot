@@ -4,7 +4,14 @@
         "hour": 10,
         "minute": 30
     },
-    "minYelpRating": 3.0,
-    "minYelpReviews": 10,
+    "yelp": {
+        "minRating": 3.0,
+        "minReviews": 10
+    },
+    "location": {
+        "marketID": "35",
+        "longitude": "-78.47682150000003",
+        "latitude": "38.0304323"
+    },
     "defaultRestaurants": []
 }
