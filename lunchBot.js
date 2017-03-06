@@ -81,6 +81,7 @@ function startBot(){
  */
 function updateRestaurants() {
     // Get restaurant data from OrderUp
+    // TODO: Make this URL configurable.
     var url = 'https://orderup.com/api/v2/restaurants?order_type=delivery&lon=-78.47682150000003&lat=38.0304323&market_id=35';
 
     // This is the root of the OrderUp URL. Add add the restaurant slug plus '/delivery' to build the full URL.
