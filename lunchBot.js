@@ -26,6 +26,15 @@ var request = require('request');
 var os = require('os');
 var CONFIG = require('./config.json');
 
+// Mask for creating the OrderUp URL. Replace $SLUG$ with the restaurant slug to build the full URL.
+var ORDERUP_ORDER_URL_MASK = 'https://orderup.com/restaurants/$SLUG$/delivery';
+
+// URL to request restaurant list from OrderUp.
+var RESTAURANT_LIST_URL = 'https://orderup.com/api/v2/restaurants?order_type=delivery' + 
+    '&lon=' + CONFIG.location.longitude + 
+    '&lat=' + CONFIG.location.latitude + 
+    '&market_id=' + CONFIG.location.marketID;
+
 var controller = Botkit.slackbot({
     debug: true,
     json_file_store:'storage'
@@ -80,17 +89,8 @@ function startBot(){
  * Updates defaultRestaurants list with data from OrderUp
  */
 function updateRestaurants() {
-    // Get restaurant data from OrderUp
-    var url = 'https://orderup.com/api/v2/restaurants?order_type=delivery' + 
-        '&lon=' + CONFIG.location.longitude + 
-        '&lat=' + CONFIG.location.latitude + 
-        '&market_id=' + CONFIG.location.marketID;
-
-    // This is the root of the OrderUp URL. Add add the restaurant slug plus '/delivery' to build the full URL.
-    var orderUpRootURL = 'https://orderup.com/restaurants/';
-
     request({
-        url: url,
+        url: RESTAURANT_LIST_URL,
         json: true
     }, function (error, response, body) {
         if (!error && response.statusCode === 200) {
