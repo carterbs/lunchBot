@@ -81,7 +81,7 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
     }
 
     var restaurantsPerPoll = CONFIG.restaurantsPerPoll;
-    if (restaurantsPerPoll === 'undefined') {
+    if (typeof(restaurantsPerPoll) === 'undefined') {
         // Default to five restaurants per poll
         restaurantsPerPoll = 5;
     } if (restaurantsPerPoll < 2) {
