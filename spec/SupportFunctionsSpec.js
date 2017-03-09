@@ -115,7 +115,7 @@ describe("SupportFunctions Tests", function () {
 
         // Save number of restaurants per poll to restore later.
         var restaurantsPerPoll = CONFIG.restaurantsPerPoll;
-        
+
         // Check default number of polls
         CONFIG.restaurantsPerPoll = undefined;
         randomRestaurants = SUPPORT_FUNCTIONS.selectRestaurants(restaurants);
@@ -138,41 +138,3 @@ describe("SupportFunctions Tests", function () {
         CONFIG.restaurantsPerPoll = restaurantsPerPoll;
     });
 });
-
-
-// /**
-//  * Simulate running the poll for a week, removing selected restaurants from the pool.
-//  */
-// function testWeek() {
-//     var restaurants = updateRestaurants();
-//     console.log('Restaurant count: ' + restaurants.length);
-
-//     var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-//     var selectedRestaurants = [];
-//     days.forEach(function (day) {
-//         var randomRestaurants = selectRestaurants(restaurants, selectedRestaurants);
-
-//         console.log(day + '-------------------------------------------------');
-//         console.log('Number of restaurants selected: ' + randomRestaurants.length);
-//         console.log('Selected Restaurants:');
-//         randomRestaurants.forEach(function (restaurant) {
-//             var categories = '';
-//             restaurant.categories.forEach(function (category) {
-//                 if (categories.length > 0) {
-//                     categories += ', ';
-//                 }
-
-//                 categories += category.name;
-//             });
-
-//             console.log('\t' + restaurant.name + '\t(' + categories + ')');
-//         });
-
-//         var restaurantIndex = Math.floor(Math.random() * 5);
-//         var selectedRestaurant = randomRestaurants[restaurantIndex]
-//         console.log('\tSelected Restaurant: ' + selectedRestaurant.name);
-
-//         // Save selected restaurant for exclusion from future days.
-//         selectedRestaurants.push(selectedRestaurant);
-//     });
-// }
