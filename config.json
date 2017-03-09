@@ -4,6 +4,7 @@
         "hour": 10,
         "minute": 30
     },
+    "restaurantsPerPoll": 5,
     "yelp": {
         "minRating": 3.0,
         "minReviews": 10
@@ -13,5 +14,18 @@
         "longitude": "-78.47682150000003",
         "latitude": "38.0304323"
     },
-    "defaultRestaurants": []
+    "categoriesToIgnore": [
+        "Vegetarian",
+        "Dessert & Baked Goods",
+        "Open Late",
+        "Award Winning",
+        "Healthy Eats",
+        "Breakfast",
+        "OrderUp Delivered",
+        "Tacos & Burritos",
+        "Cheese Lovers",
+        "Chipotle",
+        "New Restaurants",
+        "Ice Cream"
+    ]
 }
