@@ -25,15 +25,7 @@ var Botkit = require('./node_modules/botkit/lib/Botkit.js');
 var request = require('request');
 var os = require('os');
 var CONFIG = require('./config.json');
-
-// Mask for creating the OrderUp URL. Replace $SLUG$ with the restaurant slug to build the full URL.
-var ORDERUP_ORDER_URL_MASK = 'https://orderup.com/restaurants/$SLUG$/delivery';
-
-// URL to request restaurant list from OrderUp.
-var RESTAURANT_LIST_URL = 'https://orderup.com/api/v2/restaurants?order_type=delivery' + 
-    '&lon=' + CONFIG.location.longitude + 
-    '&lat=' + CONFIG.location.latitude + 
-    '&market_id=' + CONFIG.location.marketID;
+var SUPPORT_FUNCTIONS = require('./SupportFunctions.js');
 
 var controller = Botkit.slackbot({
     debug: true,
@@ -79,49 +71,14 @@ function startBot(){
         if(today.getDay() == 1 || typeof(data.data.thisWeeksWinners) == "undefined"){
             bot.botData.thisWeeksWinners = [];
             controller.storage.users.save({id:bot.identity.id, data:bot.botData});
-            updateRestaurants();
+            SUPPORT.FUNCTIONS.updateRestaurants();
         }
         createPoll();
     });
 }
 
-/**
- * Updates defaultRestaurants list with data from OrderUp
- */
-function updateRestaurants() {
-    request({
-        url: RESTAURANT_LIST_URL,
-        json: true
-    }, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            // parse data into defaultRestaurants format
-            var newRestaurants = [];
-
-            body.restaurants.forEach(function (restaurant) {
-                if ((restaurant.yelpReviewCount < CONFIG.yelpReviewCount) ||
-                    (restaurant.yelpRating < CONFIG.minYelpRating)) {
-                    // Restaurant doesn't meet minimum rating requirements
-                    return;
-                }
-
-                var newRestaurant = {
-                    "name": restaurant.name,
-                    "categories": restaurant.restaurantCategories,
-                    "slug": restaurant.slug,
-                    "restaurantURL": restaurant.yelpURL,
-                    "image": restaurant.yelpRatingImageUrlSmall
-                };
-
-                newRestaurants.push(newRestaurant);
-            });
-
-            CONFIG.defaultRestaurants = newRestaurants;
-        }
-    });
-}
-
 // Initialize restaurants from order up
-updateRestaurants();
+SUPPORT_FUNCTIONS.updateRestaurants();
 
 controller.hears(['lunchbot, list all restaurants'], 'direct_message, mention', function(bot,message){
     controller.storage.users.get(bot.identity.id, function(err, data){
@@ -145,45 +102,13 @@ function createPoll(){
         return;
     }
 
-    function shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    }
-    var chooseRandom = function (array) {
-        var categories = [];
-        var reactions = ['one', 'two', 'three', 'four', 'five'];
-
-        return shuffle(array).filter(function (restaurant) {
-            if (categories.length == 5) return false;
-            if (bot.botData.thisWeeksWinners.join(',').indexOf(restaurant.name) > -1) return false;
-            if (categories.indexOf(restaurant.category) < 0) {
-                categories.push(restaurant.category);
-                restaurant.reaction = reactions.shift();
-                return true;
-            }
-            return false;
-        });
-    };
-
-    var restaurants = chooseRandom(bot.botData.lunchOptions);
+    var restaurants = SUPPORT_FUNCTIONS.selectRestaurants(bot.botData.lunchOptions);
     bot.todaysOptions = restaurants.map(function (r) { return r.name; });
     bot.say({channel: CONFIG.pollChannel, text: "Here are a couple of options for lunch. React using the number of your favorite option."});
     restaurants.forEach(function (restaurant) {
         bot.say({
             channel: CONFIG.pollChannel,
-            text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.category + ')'
+            text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.categories.join(', ') + ')'
         })
     });
     setTallyTimer();
