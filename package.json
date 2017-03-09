@@ -4,7 +4,7 @@
   "description": "Slack bot for helping the company choose lunch",
   "main": "lunchBot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,9 @@
   "homepage": "https://github.com/carterbs/lunchBot#readme",
   "dependencies": {
     "botkit": "^0.5.1",
-    "request": "^2.79.0"
+    "sync-request": "^4.0.1"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.3"
   }
 }
