@@ -115,6 +115,25 @@ describe("SupportFunctions Tests", function () {
 
         // Save number of restaurants per poll to restore later.
         var restaurantsPerPoll = CONFIG.restaurantsPerPoll;
+        
+        // Check default number of polls
+        CONFIG.restaurantsPerPoll = undefined;
+        randomRestaurants = SUPPORT_FUNCTIONS.selectRestaurants(restaurants);
+        expect(randomRestaurants !== null).toBe(true, 'selectRestaurants returned null');
+        expect(randomRestaurants.length)
+            .toBe(5, 'The default number of restaurants should be 5');
+
+        CONFIG.restaurantsPerPoll = 0;
+        randomRestaurants = SUPPORT_FUNCTIONS.selectRestaurants(restaurants);
+        expect(randomRestaurants !== null).toBe(true, 'selectRestaurants returned null');
+        expect(randomRestaurants.length)
+            .toBe(2, 'The minimum number of restaurants should be 2');
+
+        CONFIG.restaurantsPerPoll = 10;
+        randomRestaurants = SUPPORT_FUNCTIONS.selectRestaurants(restaurants);
+        expect(randomRestaurants !== null).toBe(true, 'selectRestaurants returned null');
+        expect(randomRestaurants.length)
+            .toBe(9, 'The maximum number of restaurants should be 9');
 
         CONFIG.restaurantsPerPoll = restaurantsPerPoll;
     });
