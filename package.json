@@ -1,0 +1,31 @@
+{
+  "name": "lunchbot",
+  "version": "1.0.0",
+  "description": "Slack bot for helping the company choose lunch",
+  "main": "lunchBot.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carterbs/lunchBot.git"
+  },
+  "keywords": [
+    "Slack",
+    "bot",
+    "lunch"
+  ],
+  "author": "Brad Carter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carterbs/lunchBot/issues"
+  },
+  "homepage": "https://github.com/carterbs/lunchBot#readme",
+  "dependencies": {
+    "botkit": "^0.5.1",
+    "sync-request": "^4.0.1"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.3"
+  }
+}

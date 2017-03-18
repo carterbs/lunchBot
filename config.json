@@ -1,225 +1,31 @@
 {
-	"pollChannel":"G02V8JK5C",
-	"tallyTime":{
-		"hour":10,
-		"minute":30  
-	},
-	"defaultRestaurants":[
-    {
-        "name": "Jack Brown's",
-        "category": "American"
+    "pollChannel": "G02V8JK5C",
+    "tallyTime": {
+        "hour": 10,
+        "minute": 30
     },
-    {
-        "name": "The Biltmore",
-        "category": "American"
+    "restaurantsPerPoll": 5,
+    "yelp": {
+        "minRating": 3.0,
+        "minReviews": 10
     },
-    {
-        "name": "Miller's",
-        "category": "American"
+    "location": {
+        "marketID": "35",
+        "longitude": "-78.47682150000003",
+        "latitude": "38.0304323"
     },
-    {
-        "name": "Moe's BBQ",
-        "category": "American"
-    },
-    {
-        "name": "The Local Smokehouse",
-        "category": "American"
-    },
-    {
-        "name": "Marco & Luca",
-        "category": "Asian"
-    },
-    {
-        "name": "Ginko Chinese",
-        "category": "Asian"
-    },
-    {
-        "name": "Miso Sweet",
-        "category": "Asian"
-    },
-    {
-        "name": "Taste of China",
-        "category": "Asian"
-    },
-    {
-        "name": "Kuma Sushi Noodles & Bar",
-        "category": "Asian"
-    },
-    {
-        "name": "Taiwan Garden",
-        "category": "Asian"
-    },
-    {
-        "name": "Szechuan Restaurant",
-        "category": "Asian"
-    },
-    {
-        "name": "Red Lantern",
-        "category": "Asian"
-    },
-    {
-        "name": "Asian Express",
-        "category": "Asian"
-    },
-    {
-        "name": "Got Dumplings",
-        "category": "Asian"
-    },
-    {
-        "name": "Vuuuuu Noodles",
-        "category": "Asian"
-    },
-    {
-        "name": "Zip Korean Chicken",
-        "category": "Chicken"
-    },
-    {
-        "name": "Black Jack's Mobile Soul Food Kitchen",
-        "category": "Chicken"
-    },
-    {
-        "name": "The Ante Room",
-        "category": "Chicken"
-    },
-    {
-        "name": "Wild Wing Cafe",
-        "category": "Chicken"
-    },
-    {
-        "name": "Brown's Fried Chicken",
-        "category": "Chicken"
-    },
-    {
-        "name": "Wayside",
-        "category": "Chicken"
-    },
-    {
-        "name": "Chick-Fil-A",
-        "category": "Chicken"
-    },
-    {
-        "name": "Doma",
-        "category": "Chicken"
-    },
-    {
-        "name": "Gudalajara",
-        "category": "Mexican"
-    },
-    {
-        "name": "Baja Bean",
-        "category": "Mexican"
-    },
-    {
-        "name": "Yearbook Taco",
-        "category": "Mexican"
-    },
-    {
-        "name": "Plaza Azteca",
-        "category": "Mexican"
-    },
-    {
-        "name": "Fry's Spring",
-        "category": "Pizza"
-    },
-    {
-        "name": "Benny Deluca's",
-        "category": "Pizza"
-    },
-    {
-        "name": "Crozet Pizza",
-        "category": "Pizza"
-    },
-    {
-        "name": "Christian's",
-        "category": "Pizza"
-    },
-    {
-        "name": "Fabio's",
-        "category": "Pizza"
-    },
-    {
-        "name": "College Inn",
-        "category": "Pizza"
-    },
-    {
-        "name": "Belmont Pizza",
-        "category": "Pizza"
-    },
-    {
-        "name": "Fig Bistro - Cajun",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "The Market at Mill Creek",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Nude Food",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Ivy Provisions",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Jason's Deli",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Panera",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Feast",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Timbercreek Market",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "The Shebeen",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Little John's",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Firehouse Subs",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Basil",
-        "category": "Sandwiches"
-    },
-    {
-        "name": "Afghan Kabob Palace",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Milan",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Taste of India",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Thai Cuisine and Noodle House",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Thai 99",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Downtown Thai",
-        "category": "Thai/Indian"
-    },
-    {
-        "name": "Monsoon Siam",
-        "category": "Thai/Indian"
-    }
-]
+    "categoriesToIgnore": [
+        "Vegetarian",
+        "Dessert & Baked Goods",
+        "Open Late",
+        "Award Winning",
+        "Healthy Eats",
+        "Breakfast",
+        "OrderUp Delivered",
+        "Tacos & Burritos",
+        "Cheese Lovers",
+        "Chipotle",
+        "New Restaurants",
+        "Ice Cream"
+    ]
 }
