@@ -4,7 +4,6 @@
 // TODO: Add ability to overrule lunchbot
 var request = require('sync-request');
 var CONFIG = require('./config.json');
-
 /**
  * Mask for creating the OrderUp URL. Replace $SLUG$ with the restaurant slug to build the full URL.
  */
@@ -51,10 +50,12 @@ function updateRestaurants() {
                 // Restaurant doesn't meet minimum rating requirements
                 return;
             }
-
+            //grab name from each item and join with a comma.
+            var categoryList = categories.map(function (category) { return category.name }).join(', ');
             var newRestaurant = {
                 "name": restaurant.name,
                 "categories": categories,
+                "categoryList": categoryList,
                 "slug": restaurant.slug,
                 "restaurantURL": restaurant.yelpURL,
                 "image": restaurant.yelpRatingImageUrlSmall,
@@ -105,7 +106,7 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
         // Select random restaurant from remaining restaurant list.
         var restaurantIndex = Math.floor(Math.random() * restaurants.length);
         var selectedRestaurant = restaurants[restaurantIndex];
-
+        selectedRestaurant.reaction = reactions[i];
         // Added selected restaurant to the list.
         selectedRestaurants.push(selectedRestaurant);
     }
@@ -122,7 +123,9 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
 function filterRestaurants(restaurants, selectedRestaurants) {
     // Get list of selected categories.
     var selectedCategories = [];
+    console.log(selectedRestaurants);
     selectedRestaurants.forEach(function (selectedRestaurant) {
+        console.log(selectedRestaurant);
         selectedRestaurant.categories.forEach(function (category) {
             if (selectedCategories.indexOf(category) < 0) {
                 selectedCategories.push(category.id);
