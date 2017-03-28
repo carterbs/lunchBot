@@ -28,6 +28,7 @@ var CONFIG = require('./config.json');
 var SUPPORT_FUNCTIONS = require('./SupportFunctions.js');
 
 var controller = Botkit.slackbot({
+    stale_connection_timeout: 60000,
     debug: true,
     json_file_store: 'storage'
 });
