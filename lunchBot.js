@@ -105,19 +105,13 @@ function createPoll() {
 
     var restaurants = SUPPORT_FUNCTIONS.selectRestaurants(bot.botData.lunchOptions);
     bot.todaysOptions = restaurants.map(function (r) { return r.name; });
-    bot.say({
-        channel: CONFIG.pollChannel,
-        text: "Here are a couple of options for lunch. React using the number of your favorite option."
-    });
+    var poll = 'Here are a couple of options for lunch. React using the number of your favorite option.\n';
+    for (var i = 0; i < restaurants.length; ++i) {
+        var restaurant = restaurants[i];
+        poll += ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.categoryList + ')\n';
+    }
 
-    restaurants.forEach(function (restaurant) {
-        setTimeout(function () {
-            bot.say({
-                channel: CONFIG.pollChannel,
-                text: ':' + restaurant.reaction + ': ' + restaurant.name + ' (' + restaurant.categoryList + ')'
-            })
-        },1000);
-    });
+    bot.say({ channel: CONFIG.pollChannel, text: poll });
     setTallyTimer();
 };
 
@@ -127,36 +121,36 @@ function setTallyTimer() {
     tallyTime.setHours(CONFIG.tallyTime.hour, CONFIG.tallyTime.minute);
     var rightNow = new Date();
     if (tallyTime > rightNow) {
-        setTimeout(function () {
-            var winner = false,
-                numVotes = 0,
-                tie = false;
-            //Goes through each of the options and counts the number of votes.
-            for (var i = 0; i < Object.keys(bot.lunchTally).length; i++) {
-                var key = Object.keys(bot.lunchTally)[i];
-                //first option becomes the winner.
-                if (!winner) {
-                    winner = bot.todaysOptions[i];
-                    numVotes = bot.lunchTally[key];
-                    continue;
-                }
-                //if this option has more votes than current winner, it becomes the winner.
-                if (bot.lunchTally[key] > numVotes) {
-                    winner = bot.todaysOptions[i];
-                    numVotes = bot.lunchTally[key];
-                } else if (numVotes && bot.lunchTally[key] == numVotes) {
-                    winner += ', ' + bot.todaysOptions[i];
-                    tie = true;
-                }
+    setTimeout(function () {
+        var winner = false,
+            numVotes = 0,
+            tie = false;
+        //Goes through each of the options and counts the number of votes.
+        for (var i = 0; i < Object.keys(bot.lunchTally).length; i++) {
+            var key = Object.keys(bot.lunchTally)[i];
+            //first option becomes the winner.
+            if (!winner) {
+                winner = bot.todaysOptions[i];
+                numVotes = bot.lunchTally[key];
+                continue;
             }
-            var winnerText = "We have ";
-            winnerText += tie ? 'Winners! They are ' : 'a winner! It is ';
-            winnerText += winner + "."
-            bot.say({ channel: CONFIG.pollChannel, text: winnerText });
-            bot.botData.thisWeeksWinners.push(winner);
-            controller.storage.users.save({ id: bot.identity.id, data: bot.botData }, function () {
-                process.exit();
-            });
+            //if this option has more votes than current winner, it becomes the winner.
+            if (bot.lunchTally[key] > numVotes) {
+                winner = bot.todaysOptions[i];
+                numVotes = bot.lunchTally[key];
+            } else if (numVotes && bot.lunchTally[key] == numVotes) {
+                winner += ', ' + bot.todaysOptions[i];
+                tie = true;
+            }
+        }
+        var winnerText = "We have ";
+        winnerText += tie ? 'Winners! They are ' : 'a winner! It is ';
+        winnerText += winner + "."
+        bot.say({ channel: CONFIG.pollChannel, text: winnerText });
+        bot.botData.thisWeeksWinners.push(winner);
+        controller.storage.users.save({ id: bot.identity.id, data: bot.botData }, function () {
+            process.exit();
+        });
 
         }, tallyTime - rightNow);
     }
