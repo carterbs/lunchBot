@@ -1,6 +1,5 @@
-console.log('SupportFunctionsTests');
-const CONFIG = require('../config.json');
-const SUPPORT_FUNCTIONS = require('../SupportFunctions.js');
+var CONFIG = require('../config.json');
+var SUPPORT_FUNCTIONS = require('../SupportFunctions.js');
 
 describe('Testing default configuration', function () {
     it('Test configuration', function () {
@@ -32,6 +31,8 @@ describe("SupportFunctions Tests", function () {
         expect(SUPPORT_FUNCTIONS.filterRestaurants).toBeDefined('filterRestaurants is not defined');
 
         expect(SUPPORT_FUNCTIONS.intersect).toBeDefined('intersect is not defined');
+
+        expect(SUPPORT_FUNCTIONS.isOpenToday).toBeDefined('isOpenToday is not defined');
     });
 
     it('test intersect', function () {
@@ -136,5 +137,18 @@ describe("SupportFunctions Tests", function () {
             .toBe(9, 'The maximum number of restaurants should be 9');
 
         CONFIG.restaurantsPerPoll = restaurantsPerPoll;
+    });
+
+    it ('Test is open today', function () {
+        var openCount = 0;
+        restaurants.forEach(function(restaurant){
+            var isOpen = SUPPORT_FUNCTIONS.isOpenToday(restaurant);
+            if (isOpen) {
+                openCount++;
+            }
+        });
+
+        expect(openCount)
+            .toBeGreaterThan(0, 'There are no restaurants open today');
     });
 });
