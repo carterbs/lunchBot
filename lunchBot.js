@@ -16,12 +16,17 @@
  *               `--`----'    '---'          `---`    '---'       `----'                                  
  *                                                                                                        
  */
+if (process.env.token) {
+    // if token is not defined try to load environment variables from .env file.
+    require('dotenv').config();
+}
+
 if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
 
-var Botkit = require('./node_modules/botkit/lib/Botkit.js');
+var Botkit = require('botkit');
 var request = require('request');
 var jsonfile = require('jsonfile');
 var CONFIG = require('./config.json');
