@@ -1,7 +1,7 @@
 // TODO: Add restaurants to ignore
 // TODO: Add daily specials
 // TODO: Add ability to save config
-// TODO: Add ability to overrule lunchbot
+// TODO: Add ability to overrule LunchBot
 // TODO: Restaurants shouldn't be saved to config
 // TODO: Might be better to have channel ID as an environment variable too
 var request = require('sync-request');
