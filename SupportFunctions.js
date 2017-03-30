@@ -1,13 +1,21 @@
 // TODO: Add restaurants to ignore
 // TODO: Add daily specials
 // TODO: Add ability to save config
-// TODO: Add ability to overrule lunchbot
+// TODO: Add ability to overrule LunchBot
+// TODO: Restaurants shouldn't be saved to config
+// TODO: Might be better to have channel ID as an environment variable too
 var request = require('sync-request');
 var CONFIG = require('./config.json');
 /**
  * Mask for creating the OrderUp URL. Replace $SLUG$ with the restaurant slug to build the full URL.
  */
 var ORDERUP_ORDER_URL_MASK = 'https://orderup.com/restaurants/$SLUG$/delivery';
+
+/**
+ * Mask for creating the URL to check the time slots for a restaurant. Replace $SLUG$ with the restaurant slug to crete
+ * the full URL.
+ */
+var ORDERUP_TIME_SLOTS_URL_MASK = 'https://orderup.com/restaurants/$SLUG$/delivery/time_slots.json';
 
 /**
  * URL to request restaurant list from OrderUp.
@@ -51,7 +59,7 @@ function updateRestaurants() {
                 return;
             }
             //grab name from each item and join with a comma.
-            var categoryList = categories.map(function (category) { return category.name }).join(', ');
+            var categoryList = categories.map(function (category) { return category.name; }).join(', ');
             var newRestaurant = {
                 "name": restaurant.name,
                 "categories": categories,
@@ -81,6 +89,7 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
         previouslySelectedRestaurants = [];
     }
 
+    // TODO: This should be done on start up and saved to the config file.
     var restaurantsPerPoll = CONFIG.restaurantsPerPoll;
     if (typeof(restaurantsPerPoll) === 'undefined') {
         // Default to five restaurants per poll
@@ -103,12 +112,16 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
         // Don't select restaurants that match the categories of the already selected restaurants.
         restaurants = filterRestaurants(restaurants, selectedRestaurants);
 
-        // Select random restaurant from remaining restaurant list.
-        var restaurantIndex = Math.floor(Math.random() * restaurants.length);
-        var selectedRestaurant = restaurants[restaurantIndex];
-        selectedRestaurant.reaction = reactions[i];
-        // Added selected restaurant to the list.
-        selectedRestaurants.push(selectedRestaurant);
+        if (restaurants.length > 0) {
+            // Select random restaurant from remaining restaurant list.
+            var restaurantIndex = Math.floor(Math.random() * restaurants.length);
+            var selectedRestaurant = restaurants[restaurantIndex];
+            selectedRestaurant.reaction = reactions[i];
+            // Added selected restaurant to the list.
+            selectedRestaurants.push(selectedRestaurant);
+        } else {
+            console.error('Not enough restaurants to provide the full list');
+        }
     }
 
     return selectedRestaurants;
@@ -123,9 +136,7 @@ var selectRestaurants = function (restaurants, previouslySelectedRestaurants) {
 function filterRestaurants(restaurants, selectedRestaurants) {
     // Get list of selected categories.
     var selectedCategories = [];
-    console.log(selectedRestaurants);
     selectedRestaurants.forEach(function (selectedRestaurant) {
-        console.log(selectedRestaurant);
         selectedRestaurant.categories.forEach(function (category) {
             if (selectedCategories.indexOf(category) < 0) {
                 selectedCategories.push(category.id);
@@ -139,11 +150,47 @@ function filterRestaurants(restaurants, selectedRestaurants) {
         var categories = restaurant.categories.map(function (category) { return category.id; });
         var categoryIntersection = intersect(selectedCategories, categories);
 
+        if (categoryIntersection.length === 0) {
+            return isOpenToday(restaurant);
+        }
+
         // Keep if there is no overlap.
-        return categoryIntersection.length === 0;
+        return false;
     });
 
     return filteredRestaurants;
+}
+
+/**
+ * Determines whether the restaurant is open today.
+ * 
+ * @param {any} restaurant 
+ * @returns 
+ */
+function isOpenToday(restaurant) {
+    var url = ORDERUP_TIME_SLOTS_URL_MASK.replace('$SLUG$', restaurant.slug);
+    var response = request('GET', url);
+
+    if (response.statusCode !== 200) {
+        // TODO: Log error
+        return false;
+    }
+
+    // parse data into defaultRestaurants format
+    var body = JSON.parse(response.body.toString('UTF-8'));
+
+    if (typeof body.days === 'undefined') {
+        return false;
+    }
+
+    var isOpen = false;
+    body.days.forEach(function(day){
+        if (day.display === 'Today') {
+            isOpen = true;
+        }
+    });
+
+    return isOpen;
 }
 
 /**
@@ -188,6 +235,7 @@ function listCategories() {
     }
 }
 
+module.exports.isOpenToday = isOpenToday;
 module.exports.updateRestaurants = updateRestaurants;
 module.exports.selectRestaurants = selectRestaurants;
 module.exports.filterRestaurants = filterRestaurants;
