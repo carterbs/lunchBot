@@ -18,6 +18,7 @@
  */
 if (process.env.token) {
     // if token is not defined try to load environment variables from .env file.
+    console.log('Error: Specify token in environment',require('dotenv').config());
     require('dotenv').config();
 }
 
@@ -82,6 +83,7 @@ function startBot() {
             
             if (bot.botData.lunchOptions) {
                 CONFIG.defaultRestaurants = bot.botData.lunchOptions;
+                console.log('writing file', CONFIG);
                 jsonfile.writeFile('config.json', CONFIG);
             }
         }
