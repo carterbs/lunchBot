@@ -80,7 +80,6 @@ function startBot() {
             bot.botData.thisWeeksWinners = [];
             controller.storage.users.save({ id: bot.identity.id, data: bot.botData });
             bot.botData.lunchOptions = SUPPORT_FUNCTIONS.updateRestaurants();
-            
             if (bot.botData.lunchOptions) {
                 CONFIG.defaultRestaurants = bot.botData.lunchOptions;
                 console.log('writing file', CONFIG);
