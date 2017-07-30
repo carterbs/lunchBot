@@ -167,6 +167,9 @@ function setTallyTimer() {
             controller.storage.users.save({ id: bot.identity.id, data: bot.botData }, function () {
                 process.exit();
             });
+            //just kill the process after 5 seconds. The code above is busted and 
+            //I don't want to figure it out right now.
+            setTimeout(process.exit, 5000);
         }, tallyTime - rightNow);
     }
 }
