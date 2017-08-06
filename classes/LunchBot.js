@@ -239,7 +239,6 @@ class LunchBot {
 			hour: CONFIG.voteCountTime.hour > 12 ? CONFIG.voteCountTime.hour - 12 : CONFIG.voteCountTime.hour,
 			minute: CONFIG.voteCountTime.minute
 		}
-		this.postToChannel(`Winner will be announced at ${voteEnd.hour}:${voteEnd.minute}${AMPM}`);
 		if (voteCountTime > rightNow) {
 			SUPPORT_FUNCTIONS.outputToTerminal(`Starting the vote timer at: ${rightNow.toUTCString()}`);
 			setTimeout(function () {
