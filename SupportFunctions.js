@@ -303,15 +303,14 @@ function retrieveOrderLink(params) {
 function login() {
 	return new Promise(function (resolve, reject) {
 		outputToTerminal("Filling out email");
-		page.evaluate(function () {
-			const ORDERUP_LOGIN = process.env.orderup_login;
+		page.evaluate(function (ORDERUP_LOGIN) {
 			return document.getElementById('email').value = ORDERUP_LOGIN;
-		}).then(function () {
+		}, ORDERUP_LOGIN).then(function () {
 			outputToTerminal("Filling out pw");
-			page.evaluate(function () {
-				const ORDERUP_PASSWORD = process.env.orderup_password;
+			//This bananas syntax is to pass vars into the dom from node.
+			page.evaluate(function (ORDERUP_PASSWORD) {
 				return document.getElementById('password').value = ORDERUP_PASSWORD;
-			}).then(function () {
+			}, ORDERUP_PASSWORD).then(function () {
 				outputToTerminal("Clicking Submit");
 				page.evaluate(function () {
 					return document.querySelector('.submit-form').click();
