@@ -23,6 +23,9 @@
   "homepage": "https://github.com/carterbs/lunchBot#readme",
   "dependencies": {
     "botkit": "^0.5.1",
+    "chalk": "^2.0.1",
+    "lodash.clonedeep": "^4.5.0",
+    "phantom": "^4.0.5",
     "sync-request": "^4.0.1"
   },
   "devDependencies": {

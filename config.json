@@ -1,9 +1,10 @@
 {
 	"pollChannel": "D1TL63YSE",
-	"tallyTime": {
-		"hour": 8,
-		"minute": 20
+	"voteCountTime": {
+		"hour": 20,
+		"minute": 0
 	},
+	"orderUpLoginURL": "https://orderup.com/login",
 	"restaurantsPerPoll": 5,
 	"yelp": {
 		"minRating": 3,
@@ -25,7 +26,6 @@
 		"Tacos & Burritos",
 		"Cheese Lovers",
 		"Chipotle",
-		"New Restaurants",
 		"Ice Cream",
 		"Cookies",
 		"Dessert",

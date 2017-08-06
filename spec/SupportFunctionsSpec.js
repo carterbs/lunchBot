@@ -157,4 +157,7 @@ describe("SupportFunctions Tests", function () {
 		expect(openCount)
 			.toBeGreaterThan(0, 'There are no restaurants open today');
 	});
+	it('should log in to order up');
+	it('should navigate to a restaurant page.');
+	it('should retrieve a group order link');
 });
