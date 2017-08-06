@@ -226,17 +226,17 @@ class LunchBot {
 		let self = this;
 		let winners = [],
 			voteCountTime = new Date(),
-			rightNow = new Date(),
-			timezoneOffset = voteCountTime.getTimezoneOffset() / 60;
+			rightNow = new Date();
 		//LB is on UTC. Config is on East Coast Time.
-		voteCountTime.setHours(Number(CONFIG.voteCountTime.hour)+timezoneOffset, Number(CONFIG.voteCountTime.minute)+timezoneOffset);
-		rightNow.setHours(rightNow.getUTCHours(), rightNow.getUTCMinutes());
+		voteCountTime.setHours(CONFIG.voteCountTime.hour, CONFIG.voteCountTime.minute);
+		
 		// Uncomment below for debugging.
 		// voteCountTime.setHours(rightNow.getHours(), rightNow.getMinutes(), rightNow.getSeconds() + 20);
-		let timeoutDuration = voteCountTime - rightNow;
+		let timeoutDuration = (voteCountTime - rightNow)/1000;
+		console.log(timeoutDuration);
 		let AMPM = CONFIG.voteCountTime.hour > 11 ? 'PM' : 'AM';
 		let voteEnd = {
-			hour: CONFIG.voteCountTime.hour > 12 ? Config.voteCountTime.hour - 12 : CONFIG.voteCountTime.hour,
+			hour: CONFIG.voteCountTime.hour > 12 ? CONFIG.voteCountTime.hour - 12 : CONFIG.voteCountTime.hour,
 			minute: CONFIG.voteCountTime.minute
 		}
 		this.postToChannel(`Winner will be announced at ${voteEnd.hour}:${voteEnd.minute}${AMPM}`);
