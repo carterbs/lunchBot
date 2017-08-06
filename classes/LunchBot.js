@@ -232,7 +232,7 @@ class LunchBot {
 		
 		// Uncomment below for debugging.
 		// voteCountTime.setHours(rightNow.getHours(), rightNow.getMinutes(), rightNow.getSeconds() + 20);
-		let timeoutDuration = (voteCountTime - rightNow)/1000;
+		let timeoutDuration = voteCountTime - rightNow;
 		console.log(timeoutDuration);
 		let AMPM = CONFIG.voteCountTime.hour > 11 ? 'PM' : 'AM';
 		let voteEnd = {
