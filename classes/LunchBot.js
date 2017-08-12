@@ -246,7 +246,7 @@ class LunchBot {
 					.then(self.countVotes.bind(self))
 					.then(self.generateWinnerString.bind(self))
 					.then(self.postToChannel.bind(self))
-					.then(self.postOrderLinks.bind(self))
+					// .then(self.postOrderLinks.bind(self))
 					.then(self.persistData.bind(self))
 					.then(process.exit)
 					//Catch any error and post it to the channel. If that fails, exit.
@@ -382,7 +382,7 @@ class LunchBot {
 		let winnerText = "We have ";
 		winnerText += tie ? 'Winners! They are ' : 'a winner! It is ';
 		winnerText += winningNames + ".";
-		winnerText += tie ? "\nRetrieving group order links..." : "\nRetrieving the group order link..."
+		// winnerText += tie ? "\nRetrieving group order links..." : "\nRetrieving the group order link..."
 		return Promise.resolve(winnerText)
 	}
 
