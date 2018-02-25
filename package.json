@@ -4,7 +4,8 @@
   "description": "Slack bot for helping the company choose lunch",
   "main": "lunchBot.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "lint": "eslint classes"
   },
   "repository": {
     "type": "git",
@@ -22,14 +23,19 @@
   },
   "homepage": "https://github.com/carterbs/lunchBot#readme",
   "dependencies": {
+    "async": "^2.6.0",
     "botkit": "^0.5.1",
     "chalk": "^2.0.1",
+    "google-spreadsheet": "^2.0.4",
     "lodash.clonedeep": "^4.5.0",
-    "phantom": "^4.0.5",
-    "sync-request": "^4.0.1"
+    "phantom": "^4.0.5"
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
     "http-response-object": "^1.1.0",
     "jasmine": "^2.5.3",
     "jasmine-reporters": "^2.2.1",
