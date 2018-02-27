@@ -201,10 +201,10 @@ class LunchBot {
 			rightNow = new Date();
 
 		// LB is on UTC. Config is on East Coast Time.
-		// voteCountTime.setHours(CONFIG.voteCountTime.hour, CONFIG.voteCountTime.minute);
+		voteCountTime.setHours(CONFIG.voteCountTime.hour, CONFIG.voteCountTime.minute);
 
 		// Uncomment below for debugging.
-		voteCountTime.setHours(rightNow.getHours(), rightNow.getMinutes(), rightNow.getSeconds() + 20);
+		// voteCountTime.setHours(rightNow.getHours(), rightNow.getMinutes(), rightNow.getSeconds() + 20);
 		const timeoutDuration = voteCountTime - rightNow;
 
 		if (voteCountTime > rightNow) {
