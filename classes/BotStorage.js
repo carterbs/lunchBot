@@ -1,16 +1,18 @@
-var clone = require('lodash.clonedeep');
-let outputToTerminal = require('../SupportFunctions').outputToTerminal;
+"use strict";
+const clone = require("lodash.clonedeep");
+const outputToTerminal = require("../SupportFunctions").outputToTerminal;
+
 class BotStorage {
 	constructor(bot, botkitController) {
 		this.bot = bot;
 		this.botkitController = botkitController;
 	}
 	retrieve(field) {
-		let self = this;
-		outputToTerminal('Bot retrieving data');
+		outputToTerminal("Bot retrieving data");
 		return new Promise((resolve, reject) => {
-			this.botkitController.storage.users.get(this.bot.identity.id, function (err, data) {
+			this.botkitController.storage.users.get(this.bot.identity.id, (err, data) => {
 				outputToTerminal(err, data);
+				if (err) return reject(err);
 				if (data) {
 					if (field) {
 						resolve(data[field]);
@@ -18,12 +20,12 @@ class BotStorage {
 						resolve(data);
 					}
 				} else {
-					outputToTerminal('No data found');
+					outputToTerminal("No data found");
 					resolve(null);
 				}
 			});
 		});
-	};
+	}
 
 	save(field, value) {
 		if (arguments.length === 1) {

@@ -1,8 +1,8 @@
 {
-	"pollChannel": "G02V8JK5C",
+	"pollChannel": "D1TL63YSE",
 	"voteCountTime": {
 		"hour": 14,
-		"minute": 29
+		"minute": 50
 	},
 	"orderUpLoginURL": "https://orderup.com/login",
 	"restaurantsPerPoll": 5,
