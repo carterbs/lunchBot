@@ -25,20 +25,18 @@ const defaultData = {
 };
 const today = new Date();
 const SUPPORT_FUNCTIONS = require("../SupportFunctions.js");
-const REACTIONS = ["one", "two", "three", "four", "five"];
+const REACTIONS = ["a1", "a2", "a3", "a4", "a5"];
 class LunchBot {
 	constructor(bot, botkitController) {
 		this.bot = bot;
 		this.say = bot.say;
 		this.botkitController = botkitController;
 		this.lunchOptions = [];
-		this.voteCount = {
-			one: 0,
-			two: 0,
-			three: 0,
-			four: 0,
-			five: 0
-		};
+		this.voteCount = {};
+
+		for (const reaction of REACTIONS) {
+			this.voteCount[reaction] = 0;
+		}
 
 		// used to add reactions to the main message.
 		this.pollMessage = {};
@@ -269,14 +267,13 @@ class LunchBot {
 	}
 	countVotes() {
 		SUPPORT_FUNCTIONS.outputToTerminal("Counting Votes");
-		const winners = this.winners;
+		let winners = this.winners;
 		let winningVoteCount = 0,
 			tie = false,
 			voteCountText = "\> *Vote Tally*";
 
 		// Goes through each of the options and counts the number of votes.
-		for (const reaction in this.voteCount) {
-			let i = Object.keys(this.voteCount).indexOf(reaction);
+		for (const [i, reaction] of REACTIONS.entries()) {
 			const restaurant = this.todaysOptions[i],
 				voteCountForRestaurant = this.voteCount[reaction];
 
@@ -288,20 +285,19 @@ class LunchBot {
 			if (winners.length === 0) {
 				winners.push(restaurant);
 				winningVoteCount = voteCountForRestaurant;
-				i++;
 				continue;
 			}
 
 			// if this option has more votes than current winner, it becomes the winner.
 			if (voteCountForRestaurant > winningVoteCount) {
-				winners[0] = restaurant;
+				winners = [restaurant];
 				winningVoteCount = voteCountForRestaurant;
 			} else if (winningVoteCount && voteCountForRestaurant === winningVoteCount) {
 				winners.push(restaurant);
 				tie = true;
 			}
-			i++;
 		}
+
 		this.postToChannel(voteCountText);
 		this.winners = winners;
 		return Promise.resolve({
