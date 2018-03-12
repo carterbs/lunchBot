@@ -25,7 +25,7 @@ const defaultData = {
 };
 const today = new Date();
 const SUPPORT_FUNCTIONS = require("../SupportFunctions.js");
-const REACTIONS = ["one", "two", "three", "four", "five"];
+const REACTIONS = ["a1", "a2", "a3", "a4", "a5"];
 const async = require("async");
 class LunchBot {
 	constructor(bot, botkitController) {
@@ -33,13 +33,11 @@ class LunchBot {
 		this.say = bot.say;
 		this.botkitController = botkitController;
 		this.lunchOptions = [];
-		this.voteCount = {
-			one: 0,
-			two: 0,
-			three: 0,
-			four: 0,
-			five: 0
-		};
+		this.voteCount = {};
+
+		for (const reaction of REACTIONS) {
+			this.voteCount[reaction] = 0;
+		}
 
 		// used to add reactions to the main message.
 		this.pollMessage = {};
