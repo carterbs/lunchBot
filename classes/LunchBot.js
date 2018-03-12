@@ -249,14 +249,13 @@ class LunchBot {
 	}
 	countVotes() {
 		SUPPORT_FUNCTIONS.outputToTerminal("Counting Votes");
-		const winners = this.winners;
+		let winners = this.winners;
 		let winningVoteCount = 0,
 			tie = false,
 			voteCountText = "\> *Vote Tally*";
 
 		// Goes through each of the options and counts the number of votes.
-		for (const reaction in this.voteCount) {
-			let i = Object.keys(this.voteCount).indexOf(reaction);
+		for (const [i, reaction] of REACTIONS.entries()) {
 			const restaurant = this.todaysOptions[i],
 				voteCountForRestaurant = this.voteCount[reaction];
 
@@ -268,20 +267,19 @@ class LunchBot {
 			if (winners.length === 0) {
 				winners.push(restaurant);
 				winningVoteCount = voteCountForRestaurant;
-				i++;
 				continue;
 			}
 
 			// if this option has more votes than current winner, it becomes the winner.
 			if (voteCountForRestaurant > winningVoteCount) {
-				winners[0] = restaurant;
+				winners = [restaurant];
 				winningVoteCount = voteCountForRestaurant;
 			} else if (winningVoteCount && voteCountForRestaurant === winningVoteCount) {
 				winners.push(restaurant);
 				tie = true;
 			}
-			i++;
 		}
+
 		this.postToChannel(voteCountText);
 		this.winners = winners;
 		return Promise.resolve({
