@@ -26,7 +26,6 @@ const defaultData = {
 const today = new Date();
 const SUPPORT_FUNCTIONS = require("../SupportFunctions.js");
 const REACTIONS = ["one", "two", "three", "four", "five"];
-const async = require("async");
 class LunchBot {
 	constructor(bot, botkitController) {
 		this.bot = bot;
@@ -131,23 +130,42 @@ class LunchBot {
 
 
 	addReactions() {
-		const self = this;
+		const api = this.bot.api;
+		const controller = this.botkitController;
+		const params = {
+			channel: this.pollMessage.channel,
+			timestamp: this.pollMessage.ts,
+			user: this.bot.identity.id
+		};
+		const iterator = REACTIONS[Symbol.iterator]();
+		let position = iterator.next();
 
-		return new Promise(resolve => {
-			/**
-			 * Posts a reaction beneath the options
-			 * @param {string} reaction
-			 * @param {callback} done
-			 */
-			function postReaction(reaction, done) {
-				self.bot.api.callAPI("reactions.add", {
-					channel: self.pollMessage.channel,
-					timestamp: self.pollMessage.message.ts,
-					user: self.bot.identity.id,
-					name: reaction
-				}, done);
+		const onnext = (resolve, reject) => {
+			if (position.done) {
+				return resolve();
 			}
-			async.eachSeries(REACTIONS, postReaction, resolve);
+
+			params.name = position.value;
+			api.callAPI("reactions.add", params, err => {
+				position = iterator.next();
+
+				if (err) {
+					reject(err);
+					position.done = true;
+				}
+			});
+		};
+
+		return new Promise((resolve, reject) => {
+			controller.on("reaction_added", (bot, message) => {
+				if (message.user === bot.identity.id &&
+						message.item.channel === CONFIG.pollChannel &&
+						message.item_user === bot.identity.id) {
+					onnext(resolve, reject);
+				}
+			});
+
+			onnext(resolve, reject);
 		});
 	}
 
