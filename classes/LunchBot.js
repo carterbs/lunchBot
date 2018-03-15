@@ -136,34 +136,32 @@ class LunchBot {
 			user: this.bot.identity.id
 		};
 		const iterator = REACTIONS[Symbol.iterator]();
-		let position = iterator.next();
 
-		const onnext = (resolve, reject) => {
+		// call once per iterator step, or length + 1 times
+		const onnext = (position, callback) => {
 			if (position.done) {
-				return resolve();
+				return callback(null, true);
 			}
 
 			params.name = position.value;
-			api.callAPI("reactions.add", params, err => {
-				position = iterator.next();
-
-				if (err) {
-					reject(err);
-					position.done = true;
-				}
-			});
+			api.callAPI("reactions.add", params, err => callback(err, !!err));
 		};
 
 		return new Promise((resolve, reject) => {
+			const delegate = (err, done) => {
+				if (err) return reject(err);
+				if (done) return resolve();
+			};
+
 			controller.on("reaction_added", (bot, message) => {
 				if (message.user === bot.identity.id &&
 						message.item.channel === CONFIG.pollChannel &&
 						message.item_user === bot.identity.id) {
-					onnext(resolve, reject);
+					onnext(iterator.next(), delegate);
 				}
 			});
 
-			onnext(resolve, reject);
+			onnext(iterator.next(), delegate);
 		});
 	}
 
