@@ -137,7 +137,14 @@ class LunchBot {
 		};
 		const iterator = REACTIONS[Symbol.iterator]();
 
-		// call once per iterator step, or length + 1 times
+		/**
+		 * Add a single reaction per iterator step OR set done.
+		 *
+		 * @param {Object} position step object created by iterator.next()
+		 * @param {boolean} position.done is the end of the iterator (value is ignored when true)
+		 * @param {string} position.value reaction name to add
+		 * @param {Function} callback invoked with (err, done)
+		 */
 		const onnext = (position, callback) => {
 			if (position.done) {
 				return callback(null, true);
