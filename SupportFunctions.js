@@ -12,7 +12,7 @@ const CONFIG = require("./config.json");
 /**
  * list of possible valid poll options. Can have up to nine restaurants in a poll.
  */
-const POSSIBLE_REACTIONS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+const POSSIBLE_REACTIONS = ["a1", "a2", "a3", "a4", "a5", "a6", "seven", "eight", "nine"];
 
 
 /**
