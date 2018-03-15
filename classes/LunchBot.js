@@ -148,15 +148,22 @@ class LunchBot {
 		};
 
 		return new Promise((resolve, reject) => {
+			let cancelTimer;
 			const delegate = (err, done) => {
 				if (err) return reject(err);
 				if (done) return resolve();
+
+				// reject if this timer is never cleared
+				cancelTimer = setTimeout(() => {
+					reject(new Error('reactions.add was successful without a reaction_added event after 850 milliseconds'));
+				}, 850);
 			};
 
 			controller.on("reaction_added", (bot, message) => {
 				if (message.user === bot.identity.id &&
 						message.item.channel === CONFIG.pollChannel &&
 						message.item_user === bot.identity.id) {
+					clearTimeout(cancelTimer); // prevent cancel
 					onnext(iterator.next(), delegate);
 				}
 			});
