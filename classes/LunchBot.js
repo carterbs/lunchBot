@@ -26,7 +26,6 @@ const defaultData = {
 const today = new Date();
 const SUPPORT_FUNCTIONS = require("../SupportFunctions.js");
 const REACTIONS = ["a1", "a2", "a3", "a4", "a5"];
-const async = require("async");
 class LunchBot {
 	constructor(bot, botkitController) {
 		this.bot = bot;
@@ -129,23 +128,54 @@ class LunchBot {
 
 
 	addReactions() {
-		const self = this;
+		const api = this.bot.api;
+		const controller = this.botkitController;
+		const params = {
+			channel: this.pollMessage.channel,
+			timestamp: this.pollMessage.ts,
+			user: this.bot.identity.id
+		};
+		const iterator = REACTIONS[Symbol.iterator]();
 
-		return new Promise(resolve => {
-			/**
-			 * Posts a reaction beneath the options
-			 * @param {string} reaction
-			 * @param {callback} done
-			 */
-			function postReaction(reaction, done) {
-				self.bot.api.callAPI("reactions.add", {
-					channel: self.pollMessage.channel,
-					timestamp: self.pollMessage.message.ts,
-					user: self.bot.identity.id,
-					name: reaction
-				}, done);
+		/**
+		 * Add a single reaction per iterator step OR set done.
+		 *
+		 * @param {Object} position step object created by iterator.next()
+		 * @param {boolean} position.done is the end of the iterator (value is ignored when true)
+		 * @param {string} position.value reaction name to add
+		 * @param {Function} callback invoked with (err, done)
+		 */
+		const onnext = (position, callback) => {
+			if (position.done) {
+				return callback(null, true);
 			}
-			async.eachSeries(REACTIONS, postReaction, resolve);
+
+			params.name = position.value;
+			api.callAPI("reactions.add", params, err => callback(err, !!err));
+		};
+
+		return new Promise((resolve, reject) => {
+			let cancelTimer;
+			const delegate = (err, done) => {
+				if (err) return reject(err);
+				if (done) return resolve();
+
+				// reject if this timer is never cleared
+				cancelTimer = setTimeout(() => {
+					reject(new Error('reactions.add was successful without a reaction_added event after 850 milliseconds'));
+				}, 850);
+			};
+
+			controller.on("reaction_added", (bot, message) => {
+				if (message.user === bot.identity.id &&
+						message.item.channel === CONFIG.pollChannel &&
+						message.item_user === bot.identity.id) {
+					clearTimeout(cancelTimer); // prevent cancel
+					onnext(iterator.next(), delegate);
+				}
+			});
+
+			onnext(iterator.next(), delegate);
 		});
 	}
 
