@@ -59,33 +59,44 @@ class LunchBot {
 	}
 	getInitialData() {
 		SUPPORT_FUNCTIONS.outputToTerminal("Getting initial data");
+		let self = this;
+		function getRestaurants(cb) {
+			// If it's monday, wipe the winners.
+			if (today.getDay() === 1 || typeof (self.botData.thisWeeksWinners) === "undefined" || self.botData.thisWeeksWinners.length === 0) {
+				self.botData.thisWeeksWinners = [];
+				self.persistData();
+			}
+			RestaurantFetcher.fetchRestaurants((err, restaurants) => {
+				if (err) cb(err);
+				self.botData.lunchOptions = restaurants;
+				cb();
+			});
+		}
 		return new Promise((resolve, reject) => {
 			this.persistence.retrieve()
-				.then(data => {
-
+				.then(persistence => {
+					//this object has two keys, id and data. If there's nothing in storage, an error is thrown and caught below.
+					let { data } = persistence;
 					// This gets saved data (e.g., this week's winners) from storage.
 					if (!data) {
 						this.persistence.save(defaultData);
 					} else {
 						this.botData = data;
 					}
-
-					// If it's monday, wipe the winners.
-					if (today.getDay() === 1 || typeof (this.botData.thisWeeksWinners) === "undefined" || this.botData.thisWeeksWinners.length === 0) {
-						this.botData.thisWeeksWinners = [];
-						this.persistData();
-					}
-					RestaurantFetcher.fetchRestaurants((err, restaurants) => {
-						if (err) reject(err);
-						this.botData.lunchOptions = restaurants;
+					getRestaurants((err) => {
+						if (err) return reject(err);
 						resolve();
 					});
 
 				})
 				.catch(e => {
 					const err = e.message;
-
-					if (err === "Error: could not load data") {
+					if (err === "could not load data") {
+						this.persistence.save(defaultData);
+						getRestaurants((err) => {
+							if (err) return this.handleError(err);
+							resolve();
+						});
 						return;
 					}
 					this.handleError(e);
